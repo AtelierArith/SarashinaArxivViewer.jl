@@ -18,4 +18,4 @@ julia --project=. test/runtests.jl                            # オフライン�
 
 元実装との差: 回答モデルを提供終了予定の `sarashina3-mini` から `sarashina3.2-mini-thinking` に変更。
 RPM 制限はスライディング窓で管理(embedding 55/分, translate・chat 25/分 など)。
-`Project.toml` の `[sources]` は Sarashina.jl をローカルパスで参照しています。
+Sarashina.jl は private リポジトリなので `Project.toml` の `[sources]` で SSH URL 参照です(初回は `JULIA_PKG_USE_CLI_GIT=true julia --project=. -e "using Pkg; Pkg.instantiate()"`)。
