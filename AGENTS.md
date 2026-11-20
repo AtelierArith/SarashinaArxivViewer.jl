@@ -2,24 +2,17 @@
 
 SarashinaArxivViewer.jl は arXiv 論文の RAG 解説ボット(Web アプリ)。Sarashina.jl(Sarashina API クライアント)と PDFIO.jl を使う。
 
-## 依存の取得: `JULIA_PKG_USE_CLI_GIT=true` が必要
+## 依存: Sarashina.jl
 
-Sarashina.jl は **private リポジトリ**(`AtelierArith/Sarashina.jl`)で、`Project.toml` の `[sources]` に SSH URL で指定している。
+Sarashina.jl(public リポジトリ `AtelierArith/Sarashina.jl`)は `Project.toml` の `[sources]` に HTTPS URL で指定している。通常の `Pkg.instantiate()` だけで取得でき、特別な環境変数は要らない。
 
 ```toml
 [sources]
-Sarashina = {rev = "main", url = "git@github.com:AtelierArith/Sarashina.jl.git"}
+Sarashina = {rev = "main", url = "https://github.com/AtelierArith/Sarashina.jl"}
 ```
 
-Julia 組み込みの libgit2 は SSH 鍵(ssh-agent / `~/.ssh/config`)を見つけられず、`Private key location for 'git@github.com': ... user cancelled credential request` で失敗する。HTTPS URL も private のため認証が通らない。`git` CLI を使わせると解決する。
-
-```sh
-JULIA_PKG_USE_CLI_GIT=true julia --project=. -e 'using Pkg; Pkg.instantiate()'
-```
-
-- `Pkg.add` / `Pkg.update` / `Pkg.instantiate` / `Pkg.resolve` など、Sarashina.jl を clone/fetch しうる操作は全て同じ環境変数を付ける。
-- 一度取得すれば `~/.julia` にキャッシュされるため、通常の `using` やテスト実行には不要。
 - `Manifest.toml` は git 管理外(マシン固有のため)。
+- 以前は private で SSH URL + `JULIA_PKG_USE_CLI_GIT=true` が必要だったが、public 化により不要になった。
 
 ## 開発
 
